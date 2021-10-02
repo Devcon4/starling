@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - tekton-storage.yml
+patchesStrategicMerge:
+  - config-artifact-bucket.yml
+helmCharts:
+  - name: tekton-pipeline
+    releaseName: tekton-pipeline
+    repo: https://cdfoundation.github.io/tekton-helm-chart/
+    valuesInline:
