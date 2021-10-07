@@ -1,2 +1,3 @@
 /patch.yml
 /infra/tekton/tekton-storage.yml
+/infra/domain/do.env

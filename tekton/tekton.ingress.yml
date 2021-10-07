@@ -1,0 +1,29 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tekton-ingress
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    secretName: builds-cyphers-dev-cert
+  routes:
+    - match: Host(`builds.cyphers.dev`)
+      kind: Rule
+      services:
+        - kind: Service
+          name: tekton-dashboard
+          namespace: tekton
+          port: 9097
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: builds-cyphers-dev-cert
+spec:
+  dnsNames:
+    - builds.cyphers.dev
+  secretName: builds-cyphers-dev-cert
+  issuerRef:
+    name: digitalocean-issuer
+    kind: ClusterIssuer
